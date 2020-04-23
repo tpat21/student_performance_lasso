@@ -43,10 +43,10 @@ def run():
     linear = linear_model.LinearRegression(fit_intercept=True)
     linear.fit(x_train,y_train)
     acc = linear.score(x_test,y_test)
-    print(acc)
+    print("Before Lasso: {:.4f}".format(acc))
 
 
-    lasso = Lasso(alpha=0.15)
+    lasso = Lasso(alpha=0.10)
     lasso_coef = lasso.fit(X,y).coef_
 
     # clf = linear_model.Lasso(alpha=0.1)
@@ -57,13 +57,13 @@ def run():
 
 
     names = data.drop("G3", axis=1).columns
-    plt.scatter(range(len(names)),lasso_coef)
+    plt.plot(range(len(names)),lasso_coef)
     plt.xticks(range(len(names)),names,rotation=60)
     plt.show()
 
 
 
-    new_data = data[["famrel", "G1", "G2"]]
+    new_data = data[["reason","Walc","famrel", "G1", "G2"]]
     new_X = np.array(new_data)
 
     x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(new_X, y, test_size=.25)
@@ -71,7 +71,7 @@ def run():
 
     linear.fit(x_train,y_train)
     acc = linear.score(x_test,y_test)
-    print(acc)
+    print("After Lasso: {:.4f}".format(acc))
 
 
 
